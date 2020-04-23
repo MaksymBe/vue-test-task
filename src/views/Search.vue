@@ -81,22 +81,14 @@ export default {
 
 <style lang="scss">
   .search-wrapper {
-    padding-right: 50px;
+    margin-bottom: 0.5rem;
   }
 
   .search {
     width: 100%;
 
     .ant-select-auto-complete {
-      .ant-select-selection--single {
-        margin-right: -46px;
-      }
-
       .ant-input-affix-wrapper {
-        .ant-input:not(:last-child) {
-          padding-right: 62px;
-        }
-
         .ant-input-suffix button {
           border-top-left-radius: 0;
           border-bottom-left-radius: 0;
@@ -117,5 +109,16 @@ export default {
 
   .search-item-count {
     flex: none;
+  }
+
+  .ant-list-item {
+    cursor: pointer;
+    padding: 0.75rem 1rem !important;
+
+    &:hover {
+      border: 1px solid #40a9ff;
+      border-radius: 0.25rem;
+      box-shadow: 0 1px 0 1px rgba(24, 144, 255, 0.2);
+    }
   }
 </style>
