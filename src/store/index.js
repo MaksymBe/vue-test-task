@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { SET_USER_INFO, SET_USERS } from './mutation.type';
-import { GET_USER, SEARCH_USERS } from './action.type';
+import { GET_USER, GET_USERS, SEARCH_USERS } from './action.type';
 
 Vue.use(Vuex);
 
@@ -20,7 +20,6 @@ export default new Vuex.Store({
   mutations: {
     [SET_USERS]: (state, users) => {
       state.users = {
-        ...state.users,
         ...users.reduce((acc, user) => ({ [user.login]: user, ...acc }), {}),
       }
     },
@@ -47,6 +46,10 @@ export default new Vuex.Store({
     [GET_USER]: (context, login) => {
       return Vue.axios.get(`https://api.github.com/users/${login}`)
         .then(({ data: user }) => context.commit(SET_USER_INFO, user))
+    },
+    [GET_USERS]: (context) => {
+      return Vue.axios.get(`https://api.github.com/users`)
+        .then(({ data }) => context.commit(SET_USERS, data));
     },
   },
 });

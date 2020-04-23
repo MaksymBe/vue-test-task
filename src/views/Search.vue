@@ -24,11 +24,18 @@
         </a-button>
       </a-input>
     </a-auto-complete>
+    <a-list :dataSource="users" :loading="loading">
+      <a-list-item slot="renderItem" slot-scope="user" @click="onUserClick(user.login)">
+        <a-list-item-meta :title="user.login">
+          <a-avatar slot="avatar" :src="user.avatar_url"/>
+        </a-list-item-meta>
+      </a-list-item>
+    </a-list>
   </div>
 </template>
 
 <script>
-import { SEARCH_USERS } from '../store/action.type';
+  import { GET_USERS, SEARCH_USERS } from '../store/action.type';
 
 export default {
   name: 'Search',
@@ -43,6 +50,12 @@ export default {
       debounceTimeoutId: null,
     };
   },
+  mounted() {
+    if (!this.users.length) {
+      this.loading = true;
+      this.$store.dispatch(GET_USERS).finally(() => this.loading = false);
+    }
+  },
   methods: {
     handleChange(value) {
       clearTimeout(this.debounceTimeoutId);
@@ -56,6 +69,9 @@ export default {
       }, 500);
     },
     onSelect(login) {
+      this.$router.push({ name: 'user', params: { login } });
+    },
+    onUserClick(login) {
       this.$router.push({ name: 'user', params: { login } });
     },
   }
