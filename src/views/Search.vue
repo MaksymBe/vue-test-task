@@ -36,6 +36,7 @@
 
 <script>
   import { GET_USERS, SEARCH_USERS } from '../store/action.type';
+  import { SET_USERS } from '../store/mutation.type';
 
 export default {
   name: 'Search',
@@ -68,8 +69,8 @@ export default {
                 .finally(() => this.loading = false);
       }, 500);
     },
-    onSelect(login) {
-      this.$router.push({ name: 'user', params: { login } });
+    onSelect(selectedLogin) {
+      this.$store.commit(SET_USERS, this.users.filter(({ login }) => login === selectedLogin));
     },
     onUserClick(login) {
       this.$router.push({ name: 'user', params: { login } });
